@@ -34,25 +34,73 @@ client.on('message', async msg => {
         await delay(2000);
         const contact = await msg.getContact();
         const name = contact.pushname;
-        await client.sendMessage(msg.from, `Olá, {nomeCliente}! Vi que você se interessou pelo nosso tratamento natural encapsulado para emagrecimento. 😊 Nosso produto é 100% natural, aprovado pela Anvisa, e ajuda na perda de peso de forma saudável e eficaz.`);
+        await client.sendMessage(msg.from, `Olá! 👋 Bem-vindo(a)!
+Estamos aqui para ajudar você a conquistar seus objetivos de emagrecimento com o LiftDetox, um produto 100% natural e em cápsulas, que ajuda a:
+✅ Acelerar o metabolismo;
+✅ Reduzir a retenção de líquidos;
+✅ Diminuir o apetite;
+✅ Melhorar sua energia e disposição.
+
+🌟 Aproveite nossas promoções exclusivas:
+
+1 pote por apenas R$ 137: Clique aqui para comprar!
+Promoção Black Friday!
+👉 Compre 2 e ganhe 1 por R$ 168,30: Clique aqui para aproveitar!
+👉 Compre 3 e ganhe 2 por R$ 213,30: Clique aqui para garantir!
+`);
         await delay(2000);
         await client.sendMessage(msg.from, `Dê uma olhada em alguns depoimentos de quem já experimentou e aprovou! 👇`);
         await delay(3000);
-        const media = MessageMedia.fromFilePath(path.join(__dirname, '/images/1pote.jpg'));
+        const media = MessageMedia.fromFilePath(path.join(__dirname, '/images/prova1.jpg'));
         await client.sendMessage(msg.from, media);
+        const media2 = MessageMedia.fromFilePath(path.join(__dirname, '/images/prova2.jpg'));
+        await client.sendMessage(msg.from, media2);
         await delay(3000);
         await client.sendMessage(msg.from, `Acredito que faça sentido para você investir um baixo custo para alcançar um corpo saudável e ter mais bem-estar. 🧐`);
         
         await client.sendMessage(msg.from, `O que você deseja fazer agora? Escolha uma das opções:
 
-1️⃣ Comprar o Lift Detox Black
+1️⃣ Comprar agora
 2️⃣ Informações sobre o Lift Detox Black
 3️⃣ Rastrear pedido
-9 Falar com atendente`);
+9️⃣ Falar com um atendente humano`);
 
         // Atualiza o estado para o menu principal
         userStates[userId] = { menu: 'main' };
     }
+
+
+// INICIAR
+if (msg.body === 'Iniciar/iniciar|INICIAR' && userState.menu === 'iniciar') {
+    await delay(3000);
+    await chat.sendStateTyping();
+    await delay(3000);
+    await client.sendMessage(msg.from, `O que você deseja fazer agora? Escolha uma das opções:
+
+1️⃣ Comprar agora
+2️⃣ Informações sobre o Lift Detox Black
+3️⃣ Rastrear pedido
+9️⃣ Falar com um atendente humano`);
+    
+    // Atualiza o estado para a escolha do kit de compra
+    userStates[userId] = { menu: 'main' };
+}
+
+if (msg.body === 'Ola' && userState.menu === 'atendimentoHumano') {
+    await delay(3000);
+    await chat.sendStateTyping();
+    await delay(3000);
+    await client.sendMessage(msg.from, `Aguarde, em breve um atendente irá entrar em contato.
+Ou então navegue entre as opções:
+
+1️⃣ Comprar agora
+2️⃣ Informações sobre o Lift Detox Black
+3️⃣ Rastrear pedido
+9️⃣ Falar com um atendente humano`);
+    
+    // Atualiza o estado para a escolha do kit de compra
+    userStates[userId] = { menu: 'main' };
+}
 
 
 
@@ -63,8 +111,8 @@ client.on('message', async msg => {
         await delay(3000);
         await client.sendMessage(msg.from, `Qual opção de compra?:
 1️⃣ 1 pote: Ideal para 1 mês de tratamento. (R$137,00)
-2️⃣ 2 potes + 1 grátis (Recomendado): Ideal para 3 meses de tratamento. (R$237,00)
-3️⃣ 3 potes + 2 grátis: Ideal para 5 meses de tratamento. (R$337,00)`);
+2️⃣ 2 potes + 1 grátis (Recomendado): Ideal para 3 meses de tratamento. (R$168,30)
+3️⃣ 3 potes + 2 grátis: Ideal para 5 meses de tratamento. (213,30)`);
         
         // Atualiza o estado para a escolha do kit de compra
         userStates[userId] = { menu: 'purchase' };
@@ -75,15 +123,15 @@ client.on('message', async msg => {
         await delay(3000);
         await chat.sendStateTyping();
         await delay(3000);
-        await client.sendMessage(msg.from, `Compre 1 Ideal para um mes de tratamento. Veja a imagem do produto: 👇`);
+        await client.sendMessage(msg.from, `Você escolheu 1 pote por R$ 137, ideal para começar e experimentar os benefícios do LiftDetox. Uma excelente escolha para quem deseja iniciar o processo de emagrecimento com segurança. Vamos finalizar sua compra?`);
         await delay(2000);
-        const media = MessageMedia.fromFilePath(path.join(__dirname, '/images/1pote.jpg'));
-        await client.sendMessage(msg.from, media);
-        await delay(2000);
+        //const media = MessageMedia.fromFilePath(path.join(__dirname, '/images/1pote.jpg'));
+        //await client.sendMessage(msg.from, media);
+        //await delay(2000);
         await client.sendMessage(msg.from, `Oque deseja fazer?
-1 - Finalizar compra
-2 - Voltar ao inicio
-3 - Falar com atendente`);
+1️⃣ - Gerar link de compra
+2️⃣ - Voltar ao inicio
+3️⃣ - Falar com atendente`);
         
         // Atualiza o estado para a opção selecao de potes
         userStates[userId] = { menu: 'selectPurchase1' };
@@ -93,15 +141,15 @@ client.on('message', async msg => {
         await delay(3000);
         await chat.sendStateTyping();
         await delay(3000);
-        await client.sendMessage(msg.from, `Compre 2 potes e ganhe 1 grátis! Ideal para 5 meses de tratamento. Veja a imagem do produto: 👇`);
+        await client.sendMessage(msg.from, `Você escolheu Compre 2 e leve 3 por R$ 168,30, nossa promoção mais popular! Essa é a escolha perfeita para garantir resultados consistentes e aproveitar o melhor custo-benefício. Vamos seguir com essa oferta?`);
         await delay(2000);
-        const media = MessageMedia.fromFilePath(path.join(__dirname, '/images/3potes.jpg'));
-        await client.sendMessage(msg.from, media);
-        await delay(2000);
+        //const media = MessageMedia.fromFilePath(path.join(__dirname, '/images/3potes.jpg'));
+        //await client.sendMessage(msg.from, media);
+        //await delay(2000);
         await client.sendMessage(msg.from, `Oque deseja fazer?
-1 - Finalizar compra
-2 - Voltar ao inicio
-3 - Falar com atendente`);
+1️⃣ - Gerar link de compra
+2️⃣ - Voltar ao inicio
+3️⃣ - Falar com atendente`);
         
         // Atualiza o estado para a opção selecao de potes
         userStates[userId] = { menu: 'selectPurchase2' };
@@ -111,15 +159,15 @@ client.on('message', async msg => {
         await delay(3000);
         await chat.sendStateTyping();
         await delay(3000);
-        await client.sendMessage(msg.from, `Compre 3 potes e ganhe 2 grátis! Ideal para 5 meses de tratamento. Veja a imagem do produto: 👇`);
+        await client.sendMessage(msg.from, `Você escolheu Compre 3 e leve 5 por R$ 213,30, ideal para quem busca um compromisso completo com seus objetivos de emagrecimento. Com essa oferta, você garante ótimos resultados e economia máxima. Deseja confirmar?`);
         await delay(2000);
-        const media = MessageMedia.fromFilePath(path.join(__dirname, '/images/5potes.jpg'));
-        await client.sendMessage(msg.from, media);
-        await delay(2000);
+        //const media = MessageMedia.fromFilePath(path.join(__dirname, '/images/5potes.jpg'));
+        //await client.sendMessage(msg.from, media);
+        //await delay(2000);
         await client.sendMessage(msg.from, `Oque deseja fazer?
-1 - Finalizar compra
-2 - Voltar ao inicio
-3 - Falar com atendente`);
+1️⃣ - Gerar link de compra
+2️⃣ - Voltar ao inicio
+3️⃣ - Falar com atendente`);
         
         // Atualiza o estado para a opção selecao de potes
         userStates[userId] = { menu: 'selectPurchase3' };
@@ -137,7 +185,8 @@ client.on('message', async msg => {
         await delay(3000);
         await client.sendMessage(msg.from, 'Obrigado pela sua escolha!');
         await delay(3000);
-        await client.sendMessage(msg.from, 'Digite "Ola" para iniciar um novo atendimento');;
+        await client.sendMessage(msg.from, 'Digite "iniciar" para iniciar um novo atendimento');
+        userStates[userId] = { menu: 'iniciar' };
     }
 
 
@@ -148,10 +197,10 @@ client.on('message', async msg => {
         await delay(2000);
         await client.sendMessage(msg.from, `O que você deseja fazer agora? Escolha uma das opções:
     
-    1️⃣ Comprar o Lift Detox Black  
-    2️⃣ Informações sobre o Lift Detox Black  
-    3️⃣ Rastrear pedido  
-    9️⃣ Falar com atendente`);
+1️⃣ Comprar o Lift Detox Black  
+2️⃣ Informações sobre o Lift Detox Black  
+3️⃣ Rastrear pedido  
+9️⃣ Falar com atendente`);
     
         // Atualiza o estado para o menu principal
         userStates[userId] = { menu: 'main' };
@@ -163,7 +212,7 @@ client.on('message', async msg => {
             await chat.sendStateTyping();
             await delay(3000);
             await client.sendMessage(msg.from, `Aguarde. Em breve a atendente irá entrar em contato com você!`);
-            
+            userStates[userId] = { menu: 'atendimentoHumano' };
             // Atualiza o estado para a opção selecao de potes
             
         }
@@ -173,13 +222,14 @@ client.on('message', async msg => {
         await chat.sendStateTyping();
         await delay(3000);
         await client.sendMessage(msg.from, 'Obrigado pela sua escolha! Vou te enviar o link para pagamento:');
-        await client.sendMessage(msg.from, 'https://ev.braip.com/campanhas/cpa/camn7z78z');
+        await client.sendMessage(msg.from, 'https://ev.braip.com/campanhas/cpa/camm7kmgp');
 
         userStates[userId] = { menu: 'compraFinalizada' };
         await delay(3000);
         await client.sendMessage(msg.from, 'Obrigado pela sua escolha!');
         await delay(3000);
-        await client.sendMessage(msg.from, 'Digite "Ola" para iniciar um novo atendimento');
+        await client.sendMessage(msg.from, 'Digite "iniciar" para iniciar um novo atendimento');
+        userStates[userId] = { menu: 'iniciar' };
 
     }
 
@@ -204,8 +254,17 @@ client.on('message', async msg => {
         await delay(3000);
         await chat.sendStateTyping();
         await delay(3000);
-        await client.sendMessage(msg.from, `Aguarde. Em breve a atendente irá entrar em contato com você!`);
-        
+        await client.sendMessage(msg.from, `Aguarde, em breve um atendente irá entrar em contato.
+
+Ou então navegue entre as opções:
+            
+1️⃣ Comprar agora
+2️⃣ Informações sobre o Lift Detox Black
+3️⃣ Rastrear pedido
+9️⃣ Falar com um atendente humano`);
+                
+                // Atualiza o estado para a escolha do kit de compra
+                userStates[userId] = { menu: 'main' };
         // Atualiza o estado para a opção selecao de potes
       
     }
@@ -215,13 +274,14 @@ client.on('message', async msg => {
         await chat.sendStateTyping();
         await delay(3000);
         await client.sendMessage(msg.from, 'Obrigado pela sua escolha! Vou te enviar o link para pagamento:');
-        await client.sendMessage(msg.from, 'https://ev.braip.com/campanhas/cpa/camn7z78z');
+        await client.sendMessage(msg.from, 'https://ev.braip.com/campanhas/cpa/cam8m6m1z');
 
         userStates[userId] = { menu: 'compraFinalizada' };
         await delay(3000);
         await client.sendMessage(msg.from, 'Obrigado pela sua escolha!');
         await delay(3000);
-        await client.sendMessage(msg.from, 'Digite "Ola" para iniciar um novo atendimento');
+        await client.sendMessage(msg.from, 'Digite "iniciar" para iniciar um novo atendimento');
+        userStates[userId] = { menu: 'iniciar' };
     }
 
 
@@ -245,8 +305,16 @@ client.on('message', async msg => {
         await delay(3000);
         await chat.sendStateTyping();
         await delay(3000);
-        await client.sendMessage(msg.from, `Aguarde. Em breve a atendente irá entrar em contato com você!`);
-        
+        await client.sendMessage(msg.from, `Aguarde, em breve um atendente irá entrar em contato.
+Ou então navegue entre as opções:
+            
+1️⃣ Comprar agora
+2️⃣ Informações sobre o Lift Detox Black
+3️⃣ Rastrear pedido
+9️⃣ Falar com um atendente humano`);
+                
+                // Atualiza o estado para a escolha do kit de compra
+                userStates[userId] = { menu: 'main' };
         // Atualiza o estado para a opção selecao de potes
         
     }
@@ -286,7 +354,7 @@ Caso tenha mais dúvidas ou queira saber onde comprar, estou à disposição!
         await delay(2000);
         await client.sendMessage(msg.from, `Acesse o link e insira seus dados para rastrear o pedido:`);
         await delay(2000);
-        await client.sendMessage(msg.from, `https://pedidos.capsulbrasil.com.br/tracking`);
+        await client.sendMessage(msg.from, `https://www.siterastreio.com.br/`);
         await delay(2000);
         await client.sendMessage(msg.from, `O que você deseja fazer agora? Escolha uma das opções:
     
@@ -306,11 +374,16 @@ Caso tenha mais dúvidas ou queira saber onde comprar, estou à disposição!
         await delay(2000);
         await chat.sendStateTyping();
         await delay(2000);
-        await client.sendMessage(msg.from, `Aguarde, uma atendente irá entrar em contato em breve.`);
-           
-        
-        // Atualiza o estado para a escolha do kit de compra
-        userStates[userId] = { menu: 'atendimentoHumano' };
+        await client.sendMessage(msg.from, `Aguarde, em breve um atendente irá entrar em contato.
+Ou então navegue entre as opções:
+            
+1️⃣ Comprar agora
+2️⃣ Informações sobre o Lift Detox Black
+3️⃣ Rastrear pedido
+9️⃣ Falar com um atendente humano`);
+                
+                // Atualiza o estado para a escolha do kit de compra
+                userStates[userId] = { menu: 'main' };
     }
 
 });
